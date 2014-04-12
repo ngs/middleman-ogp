@@ -20,6 +20,7 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
+  og.base_url = 'http://mysite.tld/'
 end
 ```
 
