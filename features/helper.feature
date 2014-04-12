@@ -18,6 +18,8 @@ Feature: OpenGraph Protocol Tags with the "ogp_tags" helper method
     Then I should see '<meta content="en_us" property="og:locale" />'
     Then I should see '<meta content="ja_jp" property="og:locale:alternate" />'
     Then I should see '<meta content="zh_tw" property="og:locale:alternate" />'
+    Then I should see '<meta content="http://myshop.foo.tld/" property="og:url" />'
+    Then I should see '<meta content="My Title" property="og:title" />'
 
   Scenario: With page data
     Given the Server is running at "test-app"
@@ -37,3 +39,5 @@ Feature: OpenGraph Protocol Tags with the "ogp_tags" helper method
     Then I should see '<meta content="en_us" property="og:locale" />'
     Then I should see '<meta content="ja_jp" property="og:locale:alternate" />'
     Then I should see '<meta content="zh_tw" property="og:locale:alternate" />'
+    Then I should see '<meta content="http://myshop.foo.tld/page.html" property="og:url" />'
+    Then I should see '<meta content="Fixture page" property="og:title" />'

@@ -4,6 +4,8 @@ Feature: Middleman Blog support
     Given the Server is running at "test-blog"
     When I go to "/"
     Then I should see '<meta content="website" property="og:type" />'
+    Then I should see '<meta content="http://myblog.foo.tld/" property="og:url" />'
+    Then I should see '<meta content="Fixture page" property="og:title" />'
 
   Scenario: article page
     Given the Server is running at "test-blog"
@@ -13,5 +15,7 @@ Feature: Middleman Blog support
     Then I should see '<meta content="ruby" property="article:tag" />'
     Then I should see '<meta content="middleman" property="article:tag" />'
     Then I should see '<meta content="blog" property="article:tag" />'
+    Then I should see '<meta content="http://myblog.foo.tld/2014/04/12/my-test.html" property="og:url" />'
+    Then I should see '<meta content="Fixture page" property="og:title" />'
 
 

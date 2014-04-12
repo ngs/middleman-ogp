@@ -1,28 +1,48 @@
 module Middleman
   module OGP
     class OGPExtension < Extension
-      option :namespaces, {}, 'Default namespaces'
-      option :blog, false, 'Middleman Blog support'
+      option :namespaces, {},            'Default namespaces'
+      option :blog,       false,         'Middleman Blog support'
+      option :auto,       %w{title url}, 'Properties to automatically fill from page data.'
+      option :base_url,   nil,           'Base URL to generate permalink for og:url'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
         Middleman::OGP::Helper.blog = options[:blog]
+        Middleman::OGP::Helper.auto = options[:auto]
+        Middleman::OGP::Helper.base_url = options[:base_url]
       end
 
       helpers do
         def ogp_tags(&block)
           opts = data.page.ogp || {}
-          if Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
+          is_blog_article = Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
+          if is_blog_article
             opts.deep_merge4!({
               og: {
                 type: 'article',
               },
               article: {
-                published_time: current_article.date.to_time.utc.iso8601,
+                published_time: current_article.date.to_time.iso8601,
                 tag: current_article.tags,
               }
             })
           end
+          if Middleman::OGP::Helper.auto.include?('title')
+            opts[:og] ||= {}
+            if is_blog_article
+              opts[:og][:title] = current_article.title
+            elsif data.page[:title]
+              opts[:og][:title] = data.page[:title]
+            elsif content_for?(:title)
+              opts[:og][:title] = yield_content(:title)
+            end
+          end
+          if Middleman::OGP::Helper.auto.include?('url') &&
+            Middleman::OGP::Helper.base_url
+            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
+          end
+
           Middleman::OGP::Helper.ogp_tags(opts) do|name, value|
             if block_given?
               block.call name, value
@@ -38,6 +58,8 @@ module Middleman
       include Padrino::Helpers::TagHelpers
       mattr_accessor :namespaces
       mattr_accessor :blog
+      mattr_accessor :auto
+      mattr_accessor :base_url
 
       def self.ogp_tags(opts = {}, &block)
         opts ||= {}

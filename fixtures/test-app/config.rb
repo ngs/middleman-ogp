@@ -8,4 +8,5 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
+  ogp.base_url = 'http://myshop.foo.tld/'
 end
