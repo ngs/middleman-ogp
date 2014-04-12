@@ -25,8 +25,10 @@ module Middleman
       mattr_accessor :namespaces
 
       def self.ogp_tags(opts = {}, &block)
+        opts ||= {}
+        opts.symbolize_keys!
         options = namespaces.respond_to?(:to_h) ? namespaces.to_h : namespaces || {}
-        options = options.deep_merge(opts || {}) {|k, old_value, new_value|
+        options = options.deep_merge4(opts) {|k, old_value, new_value|
           if old_value.is_a?(Hash)
             if new_value.is_a? Hash
               old_value.deep_merge new_value
@@ -68,4 +70,25 @@ module Middleman
 
     end
   end
+end
+
+
+class Hash
+
+  def deep_merge4(other_hash, &block)
+    dup.deep_merge4!(other_hash, &block)
+  end
+
+  def deep_merge4!(other_hash, &block)
+    other_hash.each_pair do |k,v|
+      tv = self[k]
+      if tv.is_a?(Hash) && v.is_a?(Hash)
+        self[k] = tv.deep_merge4(v, &block)
+      else
+        self[k] = block && tv ? block.call(k, tv, v) : v
+      end
+    end
+    self
+  end
+
 end

@@ -40,7 +40,7 @@ describe "Middleman::OGP::Helper" do
         EOF
       }
     end
-    describe "options is presented" do
+    describe "options are presented" do
       let(:options)    {
         {
           og: {
@@ -62,6 +62,25 @@ describe "Middleman::OGP::Helper" do
           <meta property="og:image:height" content="400" />
           <meta property="fb:description" content="bar" />
           <meta property="music:id" content="123" />
+        EOF
+      }
+    end
+    describe "only additional option is presented" do
+      let(:options)    {
+        {
+          og: {
+            type: 'article'
+          }
+        }
+      }
+      it {
+        subject.should eq <<-EOF.unindent
+          <meta property="og:image" content="http://mydomain.tld/mysite.png" />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content="300" />
+          <meta property="og:image:height" content="400" />
+          <meta property="og:type" content="article" />
+          <meta property="fb:description" content="foo" />
         EOF
       }
     end
