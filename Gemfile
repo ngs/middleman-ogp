@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "middleman-core", '~> 3.2'
+gem "middleman-blog", '~> 3.5'
 
 # Specify your gem's dependencies in middleman-ogp.gemspec
 gemspec

@@ -2,14 +2,28 @@ module Middleman
   module OGP
     class OGPExtension < Extension
       option :namespaces, {}, 'Default namespaces'
+      option :blog, false, 'Middleman Blog support'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
+        Middleman::OGP::Helper.blog = options[:blog]
       end
 
       helpers do
         def ogp_tags(&block)
-          Middleman::OGP::Helper.ogp_tags(data.page.ogp) do|name, value|
+          opts = data.page.ogp || {}
+          if Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
+            opts.deep_merge4!({
+              og: {
+                type: 'article',
+              },
+              article: {
+                published_time: current_article.date.to_time.iso8601,
+                tag: current_article.tags,
+              }
+            })
+          end
+          Middleman::OGP::Helper.ogp_tags(opts) do|name, value|
             if block_given?
               block.call name, value
             else
@@ -23,6 +37,7 @@ module Middleman
     module Helper
       include Padrino::Helpers::TagHelpers
       mattr_accessor :namespaces
+      mattr_accessor :blog
 
       def self.ogp_tags(opts = {}, &block)
         opts ||= {}
