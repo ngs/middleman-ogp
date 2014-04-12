@@ -30,10 +30,8 @@ module Middleman
           end
           if Middleman::OGP::Helper.auto.include?('title')
             opts[:og] ||= {}
-            if is_blog_article
-              opts[:og][:title] = current_article.title
-            elsif data.page[:title]
-              opts[:og][:title] = data.page[:title]
+            if current_resource.data['title']
+              opts[:og][:title] = current_resource.data['title']
             elsif content_for?(:title)
               opts[:og][:title] = yield_content(:title)
             end
