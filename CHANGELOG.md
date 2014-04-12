@@ -1,3 +1,8 @@
+1.0.3
+-----
+
+* middleman-blog support.
+
 1.0.2
 -----
 
