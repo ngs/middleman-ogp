@@ -1,10 +1,10 @@
 module Middleman
   module OGP
     class OGPExtension < Extension
-      option :namespaces, {},            'Default namespaces'
-      option :blog,       false,         'Middleman Blog support'
-      option :auto,       %w{title url}, 'Properties to automatically fill from page data.'
-      option :base_url,   nil,           'Base URL to generate permalink for og:url'
+      option :namespaces, {}, 'Default namespaces'
+      option :blog,       false, 'Middleman Blog support'
+      option :auto,       %w{title url description}, 'Properties to automatically fill from page data.'
+      option :base_url,   nil, 'Base URL to generate permalink for og:url'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
@@ -28,19 +28,25 @@ module Middleman
               }
             })
           end
+          opts[:og] ||= {}
           if Middleman::OGP::Helper.auto.include?('title')
-            opts[:og] ||= {}
             if current_resource.data['title']
               opts[:og][:title] = current_resource.data['title']
             elsif content_for?(:title)
               opts[:og][:title] = yield_content(:title)
             end
           end
+          if Middleman::OGP::Helper.auto.include?('description')
+            if current_resource.data['description']
+              opts[:og][:description] = current_resource.data['description']
+            elsif content_for?(:description)
+              opts[:og][:description] = yield_content(:description)
+            end
+          end
           if Middleman::OGP::Helper.auto.include?('url') &&
             Middleman::OGP::Helper.base_url
             opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
           end
-
           Middleman::OGP::Helper.ogp_tags(opts) do|name, value|
             if block_given?
               block.call name, value
