@@ -25,7 +25,8 @@ module Middleman
       mattr_accessor :namespaces
 
       def self.ogp_tags(opts = {}, &block)
-        options = namespaces.to_h.deep_merge(opts || {}) {|k, old_value, new_value|
+        options = namespaces.respond_to?(:to_h) ? namespaces.to_h : namespaces || {}
+        options = options.deep_merge(opts || {}) {|k, old_value, new_value|
           if old_value.is_a?(Hash)
             if new_value.is_a? Hash
               old_value.deep_merge new_value
