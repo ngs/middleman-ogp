@@ -77,6 +77,28 @@ Hello
 This is the __content__
 ```
 
+Blog Support
+------------
+
+`middleman-ogp` supports adding [article] properties like `article:published_time`, `article:tag` automatically for [middleman-blog] articles.
+
+Set `ogp.blog` to `true` in your configuration. (Defaults to `false`)
+
+```ruby
+activate :ogp do |ogp|
+  #
+  # register namespace with default options
+  #
+  ogp.namespaces = {
+    fb: data.ogp.fb,
+    # from data/ogp/fb.yml
+    og: data.ogp.og
+    # from data/ogp/og.yml
+  }
+  ogp.blog = true
+end
+```
+
 
 Build & Dependency Status
 -------------------------
@@ -92,9 +114,11 @@ License
 Copyright (c) 2014 [Atsushi Nagase]. MIT Licensed, see [LICENSE] for details.
 
 [middleman]: http://middlemanapp.com
+[middleman-blog]: https://github.com/middleman/middleman-blog
 [gem]: https://rubygems.org/gems/middleman-ogp
 [travis]: http://travis-ci.org/ngs/middleman-ogp
 [gemnasium]: https://gemnasium.com/ngs/middleman-ogp
 [codeclimate]: https://codeclimate.com/github/ngs/middleman-ogp
 [LICENSE]: https://github.com/ngs/middleman-ogp/blob/master/LICENSE.md
 [Atsushi Nagase]: http://ngs.io/
+[article]: http://ogp.me/#type_article
