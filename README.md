@@ -82,7 +82,7 @@ Build & Dependency Status
 -------------------------
 
 [![Gem Version](https://badge.fury.io/rb/middleman-ogp.png)][gem]
-[![Build Status](https://travis-ci.org/ngs/middleman-ogp.png)][travis]
+[![Build Status](https://travis-ci.org/ngs/middleman-ogp.svg?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/ngs/middleman-ogp.png?travis)][gemnasium]
 [![Code Quality](https://codeclimate.com/github/ngs/middleman-ogp.png)][codeclimate]
 
