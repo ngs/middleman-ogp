@@ -1,0 +1,12 @@
+description: 'This is my fixture Middleman site for OpenGraph.'
+image:
+  '': http://mydomain.tld/path/to/og-site-image.png
+  secure_url: https://secure.mydomain.tld/path/to/og-site-image.png
+  type: image/png
+  width: 400
+  height: 300
+locale:
+  '': en_us
+  alternate:
+    - ja_jp
+    - zh_tw

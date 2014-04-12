@@ -1,0 +1,10 @@
+html
+  head
+    meta charset="utf-8"
+    title= data.page.title
+    - ogp_tags do|name, value|
+      meta property=name content=value
+
+  body
+    .container
+      = yield
