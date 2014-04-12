@@ -26,8 +26,9 @@ module Middleman
 
       def self.ogp_tags(opts = {}, &block)
         opts ||= {}
-        opts.symbolize_keys!
-        options = namespaces.respond_to?(:to_h) ? namespaces.to_h : namespaces || {}
+        options = (namespaces.respond_to?(:to_h) ? namespaces.to_h : namespaces || {}).dup
+        opts.stringify_keys!
+        options.stringify_keys!
         options = options.deep_merge4(opts) {|k, old_value, new_value|
           if old_value.is_a?(Hash)
             if new_value.is_a? Hash
@@ -57,7 +58,7 @@ module Middleman
         case obj
         when Hash
           obj.map{|k, v|
-            og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_sym) , v, prefix, &block)
+            og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
           }.join("\n")
         when Array
           obj.map{|v|
