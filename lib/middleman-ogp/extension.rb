@@ -23,7 +23,7 @@ module Middleman
                 type: 'article',
               },
               article: {
-                published_time: current_article.date.to_time.iso8601,
+                published_time: current_article.date.to_time.utc.iso8601,
                 tag: current_article.tags,
               }
             })
