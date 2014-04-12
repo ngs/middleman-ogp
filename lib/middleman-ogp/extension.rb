@@ -45,7 +45,7 @@ module Middleman
           end
           if Middleman::OGP::Helper.auto.include?('url') &&
             Middleman::OGP::Helper.base_url
-            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
+            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, URI.encode(current_resource.url))
           end
           Middleman::OGP::Helper.ogp_tags(opts) do|name, value|
             if block_given?
