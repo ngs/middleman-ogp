@@ -1,7 +1,7 @@
 Middleman-OGP
 =============
 
-`middleman-opg` is an extension for the [Middleman] static site generator that adds OpenGraph Protocol support.
+`middleman-ogp` is an extension for the [Middleman] static site generator that adds OpenGraph Protocol support.
 
 
 Configuration
