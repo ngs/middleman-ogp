@@ -1,3 +1,8 @@
+1.0.4
+-----
+
+* Data merge order bugfix.
+
 1.0.3
 -----
 
