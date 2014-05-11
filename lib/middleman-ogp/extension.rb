@@ -15,7 +15,7 @@ module Middleman
 
       helpers do
         def ogp_tags(&block)
-          opts = data.page.ogp || {}
+          opts = current_resource.data['ogp'] || {}
           is_blog_article = Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
           if is_blog_article
             opts.deep_merge4!({
