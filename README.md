@@ -24,7 +24,7 @@ activate :ogp do |ogp|
 end
 ```
 
-### Create data files
+### In your project's root directory
 
 Create `data/ogp/fb.yml` and `data/ogp/og.yml` files.
 
