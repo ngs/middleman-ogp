@@ -105,6 +105,16 @@ module Middleman
           obj.map{|v|
             og_tag(key, v, prefix, &block)
           }.join("\n")
+        when Middleman::CoreExtensions::Collections::LazyCollectorStep
+          value = obj.value
+          case value
+          when Middleman::Util::EnhancedHash
+            value.map{|k,v|
+              og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
+            }.join("\n")
+          else
+            p value.class
+          end
         else
           block.call [prefix].concat(key).join(':'), obj.to_s
         end
