@@ -105,21 +105,24 @@ module Middleman
           obj.map{|v|
             og_tag(key, v, prefix, &block)
           }.join("\n")
-        when Middleman::CoreExtensions::Collections::LazyCollectorStep
-          value = obj.value
-          case value
-          when Middleman::Util::EnhancedHash
-            value.map{|k,v|
-              og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
-            }.join("\n")
-          else
-            p value.class
-          end
         else
-          block.call [prefix].concat(key).join(':'), obj.to_s
+          # Middleman::CoreExtensions::Collections::LazyCollectorStep is added from Middleman v4.0.0.
+          # Please merge to parent case clause if we dropped version 3 support.
+          if Object.const_defined?('Middleman::CoreExtensions::Collections::LazyCollectorStep') && obj.is_a?(Middleman::CoreExtensions::Collections::LazyCollectorStep)
+            value = obj.value
+            if value.is_a?(Middleman::Util::EnhancedHash)
+              value.map{|k,v|
+                og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
+              }.join("\n")
+            else
+              # Unknown case
+              # p value.class
+            end
+          else
+            block.call [prefix].concat(key).join(':'), obj.to_s
+          end
         end
       end
-
     end
   end
 end
