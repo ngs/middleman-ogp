@@ -5,7 +5,7 @@ pkg
 .sass-cache
 .sassc
 .tmp
-Gemfile.lock
+Gemfile*.lock
 docs
 .rbenv-*
 .*.swp

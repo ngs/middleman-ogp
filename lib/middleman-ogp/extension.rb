@@ -1,3 +1,6 @@
+require 'padrino-helpers'
+require 'active_support'
+
 module Middleman
   module OGP
     class OGPExtension < Extension
@@ -59,7 +62,7 @@ module Middleman
     end
 
     module Helper
-      include Padrino::Helpers::TagHelpers
+      include ::Padrino::Helpers::TagHelpers
       mattr_accessor :namespaces
       mattr_accessor :blog
       mattr_accessor :auto
@@ -115,8 +118,7 @@ module Middleman
                 og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
               }.join("\n")
             else
-              # Unknown case
-              # p value.class
+              raise 'Unknown data'
             end
           else
             block.call [prefix].concat(key).join(':'), obj.to_s
@@ -126,7 +128,6 @@ module Middleman
     end
   end
 end
-
 
 class Hash
 
