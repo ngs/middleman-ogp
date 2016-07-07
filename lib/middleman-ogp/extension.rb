@@ -1,5 +1,6 @@
 require 'padrino-helpers'
 require 'active_support'
+require 'middleman-core/extensions'
 
 module Middleman
   module OGP
@@ -109,16 +110,14 @@ module Middleman
             og_tag(key, v, prefix, &block)
           }.join("\n")
         else
-          # Middleman::CoreExtensions::Collections::LazyCollectorStep is added from Middleman v4.0.0.
-          # Please merge to parent case clause if we dropped version 3 support.
-          if Object.const_defined?('Middleman::CoreExtensions::Collections::LazyCollectorStep') && obj.is_a?(Middleman::CoreExtensions::Collections::LazyCollectorStep)
+          if obj.respond_to?(:value)
             value = obj.value
             if value.is_a?(Middleman::Util::EnhancedHash)
               value.map{|k,v|
                 og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
               }.join("\n")
             else
-              raise 'Unknown data'
+              raise 'Unknown value'
             end
           else
             block.call [prefix].concat(key).join(':'), obj.to_s
