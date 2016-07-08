@@ -5,7 +5,7 @@ pkg
 .sass-cache
 .sassc
 .tmp
-Gemfile.lock
+Gemfile*.lock
 docs
 .rbenv-*
 .*.swp
@@ -16,3 +16,4 @@ tmp
 Makefile
 .mm-pid-*
 *.gem
+.ruby-version

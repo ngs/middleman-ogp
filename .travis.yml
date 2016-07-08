@@ -1,14 +1,18 @@
 rvm:
-  - 1.9.3
   - 2.0.0
   - 2.1.0
+  - 2.2.2
+  - 2.3.1
   - jruby-19mode
+env:
+  - MM_VERSION=3 TEST=true
+  - MM_VERSION=4 TEST=true
 
 # Bug in jRuby w/ Rouge: https://github.com/jruby/jruby/issues/1392
 matrix:
   allow_failures:
     - rvm: jruby-19mode
 
-script: "bundle exec rake test"
+before_install: "ln -s \"Gemfile.mm${MM_VERSION}\" Gemfile"
 
-env: TEST=true
+script: "bundle exec rake test"
