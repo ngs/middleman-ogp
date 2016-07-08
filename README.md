@@ -20,8 +20,25 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
-  og.base_url = 'http://mysite.tld/'
+  ogp.base_url = 'http://mysite.tld/'
 end
+```
+
+### In your project's root directory
+
+Create `data/ogp/fb.yml` and `data/ogp/og.yml` files.
+
+Example:
+
+```yaml
+image:
+  '': http://mydomain.tld/path/to/fbimage.png
+  secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+  type: image/png
+  width: 400
+  height: 300
+locale:
+  '': en_us
 ```
 
 ### In your layout
