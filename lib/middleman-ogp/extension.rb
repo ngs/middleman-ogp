@@ -5,16 +5,18 @@ require 'middleman-core/extensions'
 module Middleman
   module OGP
     class OGPExtension < Extension
-      option :namespaces, {}, 'Default namespaces'
-      option :blog,       false, 'Middleman Blog support'
-      option :auto,       %w{title url description}, 'Properties to automatically fill from page data.'
-      option :base_url,   nil, 'Base URL to generate permalink for og:url'
+      option :namespaces,     {}, 'Default namespaces'
+      option :blog,           false, 'Middleman Blog support'
+      option :auto,           %w{title url description}, 'Properties to automatically fill from page data.'
+      option :base_url,       nil, 'Base URL to generate permalink for og:url'
+      option :image_base_url, nil, 'Base URL to generate og:image'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
         Middleman::OGP::Helper.blog = options[:blog]
         Middleman::OGP::Helper.auto = options[:auto]
         Middleman::OGP::Helper.base_url = options[:base_url]
+        Middleman::OGP::Helper.image_base_url = options[:image_base_url]
       end
 
       helpers do
@@ -51,6 +53,7 @@ module Middleman
             Middleman::OGP::Helper.base_url
             opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, URI.encode(current_resource.url))
           end
+
           Middleman::OGP::Helper.ogp_tags(opts) do|name, value|
             if block_given?
               block.call name, value
@@ -68,6 +71,7 @@ module Middleman
       mattr_accessor :blog
       mattr_accessor :auto
       mattr_accessor :base_url
+      mattr_accessor :image_base_url
 
       def self.ogp_tags(opts = {}, &block)
         opts ||= {}
@@ -120,7 +124,12 @@ module Middleman
               raise 'Unknown value'
             end
           else
-            block.call [prefix].concat(key).join(':'), obj.to_s
+            name = [prefix].concat(key).join(':')
+            value = obj.to_s
+            if Middleman::OGP::Helper.image_base_url && name == 'og:image' && !%r{^https?://}.match(value)
+              value = URI.join(Middleman::OGP::Helper.image_base_url, URI.encode(value))
+            end
+            block.call name, value
           end
         end
       end

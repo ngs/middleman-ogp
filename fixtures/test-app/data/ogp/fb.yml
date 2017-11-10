@@ -1,7 +1,1 @@
-description: 'This is my fixture Middleman site for Facebook.'
-image:
-  '': http://mydomain.tld/path/to/fb-site-image.png
-  secure_url: https://secure.mydomain.tld/path/to/fb-site-image.png
-  type: image/png
-  width: 400
-  height: 300
+app_id: 5678
