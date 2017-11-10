@@ -9,4 +9,5 @@ activate :ogp do |ogp|
     # from data/ogp/og.yml
   }
   ogp.base_url = 'http://myshop.foo.tld/'
+  ogp.image_base_url = 'https://images.mydomain.tld/path/'
 end

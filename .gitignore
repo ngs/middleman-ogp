@@ -17,3 +17,4 @@ Makefile
 .mm-pid-*
 *.gem
 .ruby-version
+Gemfile
