@@ -33,6 +33,25 @@ module Middleman
                 tag: current_article.tags,
               }
             })
+            if current_article.data.section
+              opts[:article][:section] = current_article.data.section
+            end
+            if current_article.data.expiration_time
+              opts[:article][:expiration_time] = Time.parse(current_article.data.expiration_time).utc.iso8601
+            end
+            if current_article.data.modified_time
+              opts[:article][:modified_time] = Time.parse(current_article.data.modified_time).utc.iso8601
+            end
+            if current_article.data.author
+              if current_article.data.author.kind_of?(Object)
+                opts[:article][:author] = {}
+                [:first_name, :last_name, :username, :gender].each do | field |
+                  if current_article.data.author[field]
+                    opts[:article][:author][field] = current_article.data.author[field]
+                  end
+                end
+              end
+            end
           end
           opts[:og] ||= {}
           if Middleman::OGP::Helper.auto.include?('title')
