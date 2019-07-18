@@ -42,13 +42,12 @@ module Middleman
             if current_article.data.modified_time
               opts[:article][:modified_time] = Time.parse(current_article.data.modified_time).utc.iso8601
             end
-            if current_article.data.author
-              if current_article.data.author.kind_of?(Object)
-                opts[:article][:author] = {}
-                [:first_name, :last_name, :username, :gender].each do | field |
-                  if current_article.data.author[field]
-                    opts[:article][:author][field] = current_article.data.author[field]
-                  end
+            if current_article.data.author || current_article.data.authors
+              authors = current_article.data.authors || [current_article.data.author]
+              opts[:article][:author] = []
+              authors.each do |author|
+                if author.is_a? Hash
+                  opts[:article][:author] << author.slice(:first_name, :last_name, :username, :gender)
                 end
               end
             end
