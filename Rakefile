@@ -33,3 +33,9 @@ desc "Build HTML documentation"
 task :doc do
   sh 'bundle exec yard'
 end
+
+desc "Print version"
+task :print_version do
+  require "rubygems"
+  print Gem::Specification::load("middleman-ogp.gemspec").version
+end

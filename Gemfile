@@ -1,21 +1,21 @@
 source "https://rubygems.org"
 
-gem "middleman-core", '~> 4.0'
-gem "middleman-cli", '~> 4.0'
+gem "middleman-core", '~> 4.3'
+gem "middleman-cli", '~> 4.3'
 gem "middleman-blog", '~> 4.0'
 
 # Specify your gem's dependencies in middleman-ogp.gemspec
 gemspec
 
-gem "rake",     "~> 10.1.0", :require => false
-gem "yard",     "~> 0.8.0", :require => false
+gem "rake",     "~> 13.0.1", :require => false
+gem "yard",     "~> 0.9.25", :require => false
 
 # Test tools
-gem "cucumber", "~> 2.4.0"
+gem "cucumber", "~> 3.1.2"
 gem "fivemat"
 gem "aruba",    "~> 0.14.0"
 gem "rspec"
-gem 'capybara', '~> 2.7', '>= 2.7.1'
+gem 'capybara', '~> 3.32.2'
 
 gem "slim"
 
