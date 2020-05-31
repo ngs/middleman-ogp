@@ -87,7 +87,7 @@ module Middleman
           end
           if Middleman::OGP::Helper.auto.include?('url') &&
              Middleman::OGP::Helper.base_url
-            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, URI.encode_www_form(current_resource.url))
+            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|
@@ -162,7 +162,7 @@ module Middleman
             name = [prefix].concat(key).join(':')
             value = obj.to_s
             if Middleman::OGP::Helper.image_base_url && name == 'og:image' && !%r{^https?://}.match(value)
-              value = URI.join(Middleman::OGP::Helper.image_base_url, URI.encode_www_form(value))
+              value = URI.join(Middleman::OGP::Helper.image_base_url, value)
             end
             block.call name, value
           end
