@@ -43,7 +43,7 @@ module Middleman
               opts[:article][:modified_time] = Time.parse(current_article.data.modified_time).utc.iso8601
             end
             if current_article.data.author
-              if current_article.data.author.kind_of?(Object)
+              if current_article.data.author.kind_of?(Hash)
                 opts[:article][:author] = {}
                 [:first_name, :last_name, :username, :gender].each do | field |
                   if current_article.data.author[field]
