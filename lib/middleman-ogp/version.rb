@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Middleman
   module OGP
-    VERSION = "1.2.0"
+    VERSION = '1.4.0'
   end
 end

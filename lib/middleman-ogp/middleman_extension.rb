@@ -1,2 +1,3 @@
-require 'middleman-ogp'
+# frozen_string_literal: true
 
+require 'middleman-ogp'
