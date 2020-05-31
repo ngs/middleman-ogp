@@ -37,10 +37,20 @@ module Middleman
               opts[:article][:section] = current_article.data.section
             end
             if current_article.data.expiration_time
-              opts[:article][:expiration_time] = Time.parse(current_article.data.expiration_time).utc.iso8601
+              if current_article.data.expiration_time.is_a? Time
+                expiration_time = current_article.data.expiration_time
+              else
+                expiration_time = Time.parse(current_article.data.expiration_time.to_s)
+              end
+              opts[:article][:expiration_time] = expiration_time.utc.iso8601
             end
             if current_article.data.modified_time
-              opts[:article][:modified_time] = Time.parse(current_article.data.modified_time).utc.iso8601
+              if current_article.data.modified_time.is_a? Time
+                modified_time = current_article.data.modified_time
+              else
+                modified_time = Time.parse(current_article.data.modified_time.to_s)
+              end
+              opts[:article][:modified_time] = modified_time.utc.iso8601
             end
             if current_article.data.author
               if current_article.data.author.kind_of?(Hash)
