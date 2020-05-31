@@ -1,11 +1,8 @@
-Middleman-OGP
-=============
+# Middleman-OGP
 
 `middleman-ogp` is an extension for the [Middleman] static site generator that adds OpenGraph Protocol support.
 
-
-Configuration
--------------
+## Configuration
 
 ### In your `config.rb`
 
@@ -32,13 +29,13 @@ Example:
 
 ```yaml
 image:
-  '': http://mydomain.tld/path/to/fbimage.png
+  "": http://mydomain.tld/path/to/fbimage.png
   secure_url: https://secure.mydomain.tld/path/to/fbimage.png
   type: image/png
   width: 400
   height: 300
 locale:
-  '': en_us
+  "": en_us
 ```
 
 ### In your layout
@@ -62,41 +59,38 @@ html
 
 Page data overrides default options. (deep merge).
 
-
 ```markdown
 ---
 ogp:
   og:
-    description: 'This is my fixture Middleman site.'
+    description: "This is my fixture Middleman site."
     image:
-      '': http://mydomain.tld/path/to/fbimage.png
+      "": http://mydomain.tld/path/to/fbimage.png
       secure_url: https://secure.mydomain.tld/path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
     locale:
-      '': en_us
+      "": en_us
       alternate:
         - ja_jp
         - zh_tw
   fb:
-    description: 'This is my fixture Middleman site.'
+    description: "This is my fixture Middleman site."
     image:
-      '': http://mydomain.tld/path/to/fbimage.png
+      "": http://mydomain.tld/path/to/fbimage.png
       secure_url: https://secure.mydomain.tld/path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
 ---
 
-Hello
-=====
+# Hello
 
-This is the __content__
+This is the **content**
 ```
 
-Blog Support
-------------
+## Blog Support
 
 `middleman-ogp` supports adding [article] properties like `article:published_time`, `article:tag` automatically for [middleman-blog] articles.
 
@@ -117,26 +111,19 @@ activate :ogp do |ogp|
 end
 ```
 
-
-Build & Dependency Status
--------------------------
+## Build & Dependency Status
 
 [![Gem Version](https://badge.fury.io/rb/middleman-ogp.png)][gem]
-[![Build Status](https://travis-ci.org/ngs/middleman-ogp.svg?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/ngs/middleman-ogp.png?travis)][gemnasium]
-[![Code Quality](https://codeclimate.com/github/ngs/middleman-ogp.png)][codeclimate]
+[![Run tests](https://github.com/ngs/middleman-ogp/workflows/Run%20tests/badge.svg)][ghaction]
 
-License
--------
+## License
 
-Copyright (c) 2014 [Atsushi Nagase]. MIT Licensed, see [LICENSE] for details.
+Copyright (c) 2014-2020 [Atsushi Nagase]. MIT Licensed, see [LICENSE] for details.
 
 [middleman]: http://middlemanapp.com
 [middleman-blog]: https://github.com/middleman/middleman-blog
 [gem]: https://rubygems.org/gems/middleman-ogp
-[travis]: http://travis-ci.org/ngs/middleman-ogp
-[gemnasium]: https://gemnasium.com/ngs/middleman-ogp
-[codeclimate]: https://codeclimate.com/github/ngs/middleman-ogp
-[LICENSE]: https://github.com/ngs/middleman-ogp/blob/master/LICENSE.md
-[Atsushi Nagase]: http://ngs.io/
+[ghaction]: https://github.com/ngs/middleman-ogp/actions?query=workflow%3A%22Run+tests%22
+[license]: https://github.com/ngs/middleman-ogp/blob/master/LICENSE.md
+[atsushi nagase]: http://ngs.io/
 [article]: http://ogp.me/#type_article
