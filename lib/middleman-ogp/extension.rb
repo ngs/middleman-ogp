@@ -135,7 +135,7 @@ module Middleman
         else
           if obj.respond_to?(:value)
             value = obj.value
-            if value.is_a?(Middleman::Util::EnhancedHash)
+            if value.is_a?(Hash)
               value.map{|k,v|
                 og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s) , v, prefix, &block)
               }.join("\n")
