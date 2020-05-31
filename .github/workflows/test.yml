@@ -16,5 +16,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
     - run: bundle install
+    - run: bundle exec rake rubocop
     - run: bundle exec rake spec
     - run: bundle exec rake cucumber

@@ -5,8 +5,10 @@ Bundler::GemHelper.install_tasks
 
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
+RuboCop::RakeTask.new
 
 Cucumber::Rake::Task.new(:cucumber, 'Run features that should pass') do |t|
   exempt_tags = ''
