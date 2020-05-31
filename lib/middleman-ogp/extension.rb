@@ -52,13 +52,13 @@ module Middleman
               end
               opts[:article][:modified_time] = modified_time.utc.iso8601
             end
-            if current_article.data.author
-              if current_article.data.author.kind_of?(Hash)
-                opts[:article][:author] = {}
-                [:first_name, :last_name, :username, :gender].each do | field |
-                  if current_article.data.author[field]
-                    opts[:article][:author][field] = current_article.data.author[field]
-                  end
+
+            if current_article.data.author || current_article.data.authors
+              authors = current_article.data.authors || [current_article.data.author]
+              opts[:article][:author] = []
+              authors.each do |author|
+                if author.kind_of?(Hash)
+                  opts[:article][:author] << author.to_h.symbolize_keys.slice(:first_name, :last_name, :username, :gender)
                 end
               end
             end
