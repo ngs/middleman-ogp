@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Middleman::OGP::Helper' do
+describe 'Middleman::OGP::Helper' do # rubocop:disable Metrics/BlockLength
   subject do
     Middleman::OGP::Helper.namespaces = namespaces
     Middleman::OGP::Helper.ogp_tags(options) do |name, value|
@@ -14,7 +14,7 @@ describe 'Middleman::OGP::Helper' do
     let(:options)    { nil }
     it { subject.should eq '' }
   end
-  context 'with default namespaces' do
+  context 'with default namespaces' do # rubocop:disable Metrics/BlockLength
     let(:namespaces) do
       {
         og: {
@@ -33,13 +33,13 @@ describe 'Middleman::OGP::Helper' do
     describe 'options is nil' do
       let(:options) { nil }
       it {
-        subject.should eq <<-EOF.unindent
+        subject.should eq <<-HTML.unindent
           <meta property="og:image" content="http://mydomain.tld/mysite.png" />
           <meta property="og:image:type" content="image/png" />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="400" />
           <meta property="fb:description" content="foo" />
-        EOF
+        HTML
       }
     end
     describe 'options are presented' do
@@ -57,14 +57,14 @@ describe 'Middleman::OGP::Helper' do
         }
       end
       it {
-        subject.should eq <<-EOF.unindent
+        subject.should eq <<-HTML.unindent
           <meta property="og:image" content="http://mydomain.tld/myarticle.png" />
           <meta property="og:image:type" content="image/png" />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="400" />
           <meta property="fb:description" content="bar" />
           <meta property="music:id" content="123" />
-        EOF
+        HTML
       }
     end
     describe 'only additional option is presented' do
@@ -76,14 +76,14 @@ describe 'Middleman::OGP::Helper' do
         }
       end
       it {
-        subject.should eq <<-EOF.unindent
+        subject.should eq <<-HTML.unindent
           <meta property="og:image" content="http://mydomain.tld/mysite.png" />
           <meta property="og:image:type" content="image/png" />
           <meta property="og:image:width" content="300" />
           <meta property="og:image:height" content="400" />
           <meta property="og:type" content="article" />
           <meta property="fb:description" content="foo" />
-        EOF
+        HTML
       }
     end
   end

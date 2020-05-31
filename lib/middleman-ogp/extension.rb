@@ -22,8 +22,9 @@ module Middleman
         Middleman::OGP::Helper.image_base_url = options[:image_base_url]
       end
 
-      helpers do
-        def ogp_tags(&block)
+      #
+      helpers do # rubocop:disable Metrics/BlockLength
+        def ogp_tags(&block) # rubocop:disable all
           opts = current_resource.data['ogp'] || {}
           is_blog_article = Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
           if is_blog_article
@@ -58,9 +59,14 @@ module Middleman
               authors = current_article.data.authors || [current_article.data.author]
               opts[:article][:author] = []
               authors.each do |author|
-                if author.is_a?(Hash)
-                  opts[:article][:author] << author.to_h.symbolize_keys.slice(:first_name, :last_name, :username, :gender)
-                end
+                next unless author.is_a?(Hash)
+
+                opts[:article][:author] << author.to_h.symbolize_keys.slice(
+                  :first_name,
+                  :last_name,
+                  :username,
+                  :gender
+                )
               end
             end
           end
@@ -81,7 +87,7 @@ module Middleman
           end
           if Middleman::OGP::Helper.auto.include?('url') &&
              Middleman::OGP::Helper.base_url
-            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, URI.encode(current_resource.url))
+            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, URI.encode_www_form(current_resource.url))
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|
@@ -95,6 +101,7 @@ module Middleman
       end
     end
 
+    # Middleman::OGP::Helper
     module Helper
       include ::Padrino::Helpers::TagHelpers
       mattr_accessor :namespaces
@@ -103,7 +110,7 @@ module Middleman
       mattr_accessor :base_url
       mattr_accessor :image_base_url
 
-      def self.ogp_tags(opts = {}, &block)
+      def self.ogp_tags(opts = {}, &block) # rubocop:disable Metrics/MethodLength
         opts ||= {}
         options = (namespaces.respond_to?(:to_h) ? namespaces.to_h : namespaces || {}).dup
         opts.stringify_keys!
@@ -125,7 +132,7 @@ module Middleman
         end.join("\n")
       end
 
-      def self.og_tag(key, obj = nil, prefix = 'og', &block)
+      def self.og_tag(key, obj = nil, prefix = 'og', &block) # rubocop:disable Metrics/MethodLength
         case key
         when String, Symbol
           key = [key]
@@ -146,18 +153,16 @@ module Middleman
         else
           if obj.respond_to?(:value)
             value = obj.value
-            if value.is_a?(Hash)
-              value.map do |k, v|
-                og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s), v, prefix, &block)
-              end.join("\n")
-            else
-              raise 'Unknown value'
-            end
+            raise 'Unknown value' unless value.is_a?(Hash)
+
+            value.map do |k, v|
+              og_tag(k.to_s.empty? ? key.dup : (key.dup << k.to_s), v, prefix, &block)
+            end.join("\n")
           else
             name = [prefix].concat(key).join(':')
             value = obj.to_s
             if Middleman::OGP::Helper.image_base_url && name == 'og:image' && !%r{^https?://}.match(value)
-              value = URI.join(Middleman::OGP::Helper.image_base_url, URI.encode(value))
+              value = URI.join(Middleman::OGP::Helper.image_base_url, URI.encode_www_form(value))
             end
             block.call name, value
           end
@@ -167,6 +172,7 @@ module Middleman
   end
 end
 
+# Hash extension
 class Hash
   def deep_merge4(other_hash, &block)
     dup.deep_merge4!(other_hash, &block)
