@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 activate :ogp do |ogp|
   #
   # register namespace with default options
