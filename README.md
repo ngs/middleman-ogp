@@ -17,8 +17,9 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
-  ogp.base_url = 'http://mysite.tld/'
 end
+
+set :http_prefix, 'http://mysite.tld/'
 ```
 
 ### In your project's root directory
@@ -29,8 +30,7 @@ Example:
 
 ```yaml
 image:
-  "": http://mydomain.tld/path/to/fbimage.png
-  secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+  "": path/to/fbimage.png
   type: image/png
   width: 400
   height: 300
@@ -65,8 +65,7 @@ ogp:
   og:
     description: "This is my fixture Middleman site."
     image:
-      "": http://mydomain.tld/path/to/fbimage.png
-      secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+      "": path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
@@ -78,8 +77,7 @@ ogp:
   fb:
     description: "This is my fixture Middleman site."
     image:
-      "": http://mydomain.tld/path/to/fbimage.png
-      secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+      "": path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
@@ -109,6 +107,8 @@ activate :ogp do |ogp|
   }
   ogp.blog = true
 end
+
+set :http_prefix, 'http://myblog.tld/'
 ```
 
 ## Build & Dependency Status
