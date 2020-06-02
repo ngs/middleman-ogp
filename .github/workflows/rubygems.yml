@@ -1,8 +1,7 @@
 name: Publish to RubyGems
 on:
-  push:
-    tags:
-    - v[1-9].[0-9]+.[0-9]+
+  release:
+    types: [published]
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -23,8 +22,9 @@ jobs:
     - name: Push gem
       run: |
         VERSION=$(bundle exec rake print_version)
-        if [ "refs/tags/v${VERSION}" != $GITHUB_REF ]; then
-          echo "Ref ${GITHUB_REF} not match"
+        TAG_NAME=${{ github.event.release.tag_name }}
+        if [ "v${VERSION}" != $TAG_NAME ]; then
+          echo "Ref ${TAG_NAME} not match with v${VERSION}"
           exit 1
         fi
-        gem push "pkg/middleman-ogp-${VERSION}.gem"
+    - run: gem push "pkg/middleman-ogp-${VERSION}.gem"
