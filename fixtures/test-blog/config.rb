@@ -8,6 +8,7 @@ activate :ogp do |ogp|
     fb: data.ogp.fb,
     og: data.ogp.og
   }
-  ogp.base_url = 'http://myblog.foo.tld/'
   ogp.blog = true
 end
+
+set :http_prefix, 'http://myblog.foo.tld/'

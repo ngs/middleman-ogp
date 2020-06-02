@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+activate :asset_hash
+
 activate :ogp do |ogp|
   #
   # register namespace with default options
@@ -10,6 +12,6 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
-  ogp.base_url = 'http://myshop.foo.tld/'
-  ogp.image_base_url = 'https://images.mydomain.tld/path/'
 end
+
+set :http_prefix, 'http://myshop.foo.tld/'

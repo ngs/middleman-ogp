@@ -5,7 +5,7 @@ Feature: OpenGraph Protocol Tags with the "ogp_tags" helper method
     When I go to "/"
     Then I should see '<meta content="5678" property="fb:app_id" />'
     Then I should see '<meta content="My Description" property="og:description" />'
-    Then I should see '<meta content="https://images.mydomain.tld/path/to/og-site-image.png" property="og:image" />'
+    Then I should see '<meta content="http://myshop.foo.tld/images/logo/sample2-23c27556.png" property="og:image" />'
     Then I should see '<meta content="image/png" property="og:image:type" />'
     Then I should see '<meta content="400" property="og:image:width" />'
     Then I should see '<meta content="300" property="og:image:height" />'
@@ -20,7 +20,7 @@ Feature: OpenGraph Protocol Tags with the "ogp_tags" helper method
     When I go to "/page.html"
     Then I should see '<meta content="1234" property="fb:app_id" />'
     Then I should see '<meta content="This is my fixture Middleman article." property="og:description" />'
-    Then I should see '<meta content="https://images.mydomain.tld/path/to/og-article-image.png" property="og:image" />'
+    Then I should see '<meta content="http://myshop.foo.tld/images/logo/sample-d588934c.png" property="og:image" />'
     Then I should see '<meta content="image/png" property="og:image:type" />'
     Then I should see '<meta content="400" property="og:image:width" />'
     Then I should see '<meta content="300" property="og:image:height" />'

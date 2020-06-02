@@ -1,6 +1,6 @@
 description: 'This is my fixture Middleman site for OpenGraph.'
 image:
-  '': to/og-site-image.png
+  '': logo/sample2.png
   type: image/png
   width: 400
   height: 300
