@@ -84,8 +84,8 @@ module Middleman
               opts[:og][:description] = yield_content(:description)
             end
           end
-          if Middleman::OGP::Helper.auto.include?('url') && @app.config.http_prefix.present?
-            opts[:og][:url] = URI.join(@app.config.http_prefix, current_resource.url).to_s
+          if Middleman::OGP::Helper.auto.include?('url')
+            opts[:og][:url] = Middleman::Util.url_for(@app, current_resource.url)
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|

@@ -38,6 +38,3 @@ Scenario: multi author article page
     Then I should see '<meta content="male" property="article:author:gender" />'
     Then I should see '<meta content="http://myblog.foo.tld/2019/07/18/multi-author-test.html" property="og:url" />'
     Then I should see '<meta content="Multi author fixture page" property="og:title" />'
-
-
-
