@@ -17,9 +17,8 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
+  ogp.base_url = 'http://mysite.tld/'
 end
-
-set :http_prefix, 'http://mysite.tld/'
 ```
 
 ### In your project's root directory
@@ -106,9 +105,8 @@ activate :ogp do |ogp|
     # from data/ogp/og.yml
   }
   ogp.blog = true
+  ogp.base_url = 'http://mysite.tld/'
 end
-
-set :http_prefix, 'http://myblog.tld/'
 ```
 
 ## Build & Dependency Status
