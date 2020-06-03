@@ -23,6 +23,7 @@ Feature: Middleman Blog support
     Then I should see '<meta content="2018-04-12T04:00:00Z" property="article:expiration_time" />'
     Then I should see '<meta content="blog" property="article:tag" />'
     Then I should see '<meta content="http://myblog.foo.tld/2014/04/12/my-test.html" property="og:url" />'
+    Then I should see '<meta content="http://myblog.foo.tld/images/logo/sample-d588934c.png" property="og:image" />'
     Then I should see '<meta content="Fixture page" property="og:title" />'
 
 Scenario: multi author article page

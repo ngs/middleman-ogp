@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 activate :asset_hash
-
 activate :ogp do |ogp|
-  #
-  # register namespace with default options
-  #
   ogp.namespaces = {
     fb: data.ogp.fb,
     # from data/ogp/fb.yml
@@ -15,4 +11,4 @@ activate :ogp do |ogp|
   ogp.base_url = 'http://myshop.foo.tld/'
 end
 
-activate :asset_host, :host => 'https://my.assethosting.tld'
+activate :asset_host, host: 'https://my.assethosting.tld'

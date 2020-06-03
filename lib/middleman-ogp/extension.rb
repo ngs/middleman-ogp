@@ -164,6 +164,11 @@ module Middleman
             value = obj.to_s
             if name == 'og:image' && !%r{^https?://}.match(value)
               value = Middleman::Util.asset_url(app, value, app.config.images_dir, current_resource: current_resource)
+              if app.extensions[:asset_host]
+                app.extensions[:asset_host].rewrite_url(value, '', nil)
+              elsif base_url
+                value = URI.join(base_url, value)
+              end
             end
             block.call name, value
           end
