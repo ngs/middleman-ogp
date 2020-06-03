@@ -9,6 +9,7 @@ activate :ogp do |ogp|
     og: data.ogp.og
   }
   ogp.blog = true
+  ogp.base_url = 'http://myblog.foo.tld/'
 end
 
-set :http_prefix, 'http://myblog.foo.tld/'
+activate :asset_host, :host => 'https://my.assethosting.tld'

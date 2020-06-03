@@ -11,11 +11,13 @@ module Middleman
       option :namespaces,     {}, 'Default namespaces'
       option :blog,           false, 'Middleman Blog support'
       option :auto,           %w[title url description], 'Properties to automatically fill from page data.'
+      option :base_url,       nil, 'Base URL to generate permalink for og:url'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
         Middleman::OGP::Helper.blog = options[:blog]
         Middleman::OGP::Helper.auto = options[:auto]
+        Middleman::OGP::Helper.base_url = options[:base_url]
       end
 
       #
@@ -84,8 +86,8 @@ module Middleman
               opts[:og][:description] = yield_content(:description)
             end
           end
-          if Middleman::OGP::Helper.auto.include?('url')
-            opts[:og][:url] = Middleman::Util.url_for(@app, current_resource.url)
+          if Middleman::OGP::Helper.auto.include?('url') && Middleman::OGP::Helper.base_url
+            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|
@@ -105,6 +107,7 @@ module Middleman
       mattr_accessor :namespaces
       mattr_accessor :blog
       mattr_accessor :auto
+      mattr_accessor :base_url
       mattr_accessor :app
       mattr_accessor :current_resource
 
@@ -159,7 +162,7 @@ module Middleman
           else
             name = [prefix].concat(key).join(':')
             value = obj.to_s
-            if app.config.http_prefix.present? && name == 'og:image' && !%r{^https?://}.match(value)
+            if name == 'og:image' && !%r{^https?://}.match(value)
               value = Middleman::Util.asset_url(app, value, app.config.images_dir, current_resource: current_resource)
             end
             block.call name, value
