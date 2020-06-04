@@ -8,7 +8,7 @@ activate :ogp do |ogp|
     og: data.ogp.og
     # from data/ogp/og.yml
   }
-  ogp.base_url = 'http://myshop.foo.tld/'
+  ogp.base_url = 'http://myshop.foo.tld'
 end
 
 activate :asset_host, host: 'https://my.assethosting.tld'

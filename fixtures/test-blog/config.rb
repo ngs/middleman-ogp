@@ -10,5 +10,5 @@ activate :ogp do |ogp|
     og: data.ogp.og
   }
   ogp.blog = true
-  ogp.base_url = 'http://myblog.foo.tld/'
+  ogp.base_url = 'http://myblog.foo.tld'
 end

@@ -87,7 +87,7 @@ module Middleman
             end
           end
           if Middleman::OGP::Helper.auto.include?('url') && Middleman::OGP::Helper.base_url
-            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
+            opts[:og][:url] = Middleman::OGP::Helper.base_url + current_resource.url
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|
