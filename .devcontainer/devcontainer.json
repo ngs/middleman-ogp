@@ -1,0 +1,6 @@
+{
+  "name": "middleman-ogp",
+  "image": "ruby:2.7.1",
+  "extensions": ["rebornix.Ruby"],
+  "postCreateCommand": "gem install bundler && bundle install"
+}
