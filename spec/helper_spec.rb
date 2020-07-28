@@ -3,7 +3,9 @@
 require 'spec_helper'
 
 describe 'Middleman::OGP::Helper' do # rubocop:disable Metrics/BlockLength
+  let(:app) { Middleman::Application.new }
   subject do
+    Middleman::OGP::Helper.app = app
     Middleman::OGP::Helper.namespaces = namespaces
     Middleman::OGP::Helper.ogp_tags(options) do |name, value|
       %(<meta property="#{name}" content="#{value}" />)

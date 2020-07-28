@@ -13,11 +13,15 @@ activate :ogp do |ogp|
   #
   ogp.namespaces = {
     fb: data.ogp.fb,
-    # from data/ogp/fb.yml
-    og: data.ogp.og
-    # from data/ogp/og.yml
+    og:
+      # from data/ogp/fb.yml
+      data
+        .ogp
+        .og
   }
-  ogp.base_url = 'http://mysite.tld/'
+  # from data/ogp/og.yml
+
+  ogp.base_url = 'http://mysite.tld'
 end
 ```
 
@@ -29,8 +33,7 @@ Example:
 
 ```yaml
 image:
-  "": http://mydomain.tld/path/to/fbimage.png
-  secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+  "": path/to/fbimage.png
   type: image/png
   width: 400
   height: 300
@@ -65,8 +68,7 @@ ogp:
   og:
     description: "This is my fixture Middleman site."
     image:
-      "": http://mydomain.tld/path/to/fbimage.png
-      secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+      "": path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
@@ -78,8 +80,7 @@ ogp:
   fb:
     description: "This is my fixture Middleman site."
     image:
-      "": http://mydomain.tld/path/to/fbimage.png
-      secure_url: https://secure.mydomain.tld/path/to/fbimage.png
+      "": path/to/fbimage.png
       type: image/png
       width: 400
       height: 300
@@ -103,11 +104,16 @@ activate :ogp do |ogp|
   #
   ogp.namespaces = {
     fb: data.ogp.fb,
-    # from data/ogp/fb.yml
-    og: data.ogp.og
-    # from data/ogp/og.yml
+    og:
+      # from data/ogp/fb.yml
+      data
+        .ogp
+        .og
   }
+  # from data/ogp/og.yml
+
   ogp.blog = true
+  ogp.base_url = 'http://mysite.tld'
 end
 ```
 

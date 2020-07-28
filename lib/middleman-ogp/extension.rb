@@ -12,19 +12,20 @@ module Middleman
       option :blog,           false, 'Middleman Blog support'
       option :auto,           %w[title url description], 'Properties to automatically fill from page data.'
       option :base_url,       nil, 'Base URL to generate permalink for og:url'
-      option :image_base_url, nil, 'Base URL to generate og:image'
 
       def after_configuration
         Middleman::OGP::Helper.namespaces = options[:namespaces] || {}
         Middleman::OGP::Helper.blog = options[:blog]
         Middleman::OGP::Helper.auto = options[:auto]
         Middleman::OGP::Helper.base_url = options[:base_url]
-        Middleman::OGP::Helper.image_base_url = options[:image_base_url]
       end
 
       #
       helpers do # rubocop:disable Metrics/BlockLength
         def ogp_tags(&block) # rubocop:disable all
+          Middleman::OGP::Helper.app = @app
+          Middleman::OGP::Helper.current_resource = current_resource
+
           opts = current_resource.data['ogp'] || {}
           is_blog_article = Middleman::OGP::Helper.blog && respond_to?(:is_blog_article?) && is_blog_article?
           if is_blog_article
@@ -85,9 +86,8 @@ module Middleman
               opts[:og][:description] = yield_content(:description)
             end
           end
-          if Middleman::OGP::Helper.auto.include?('url') &&
-             Middleman::OGP::Helper.base_url
-            opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
+          if Middleman::OGP::Helper.auto.include?('url') && Middleman::OGP::Helper.base_url
+            opts[:og][:url] = Middleman::OGP::Helper.base_url + current_resource.url
           end
 
           Middleman::OGP::Helper.ogp_tags(opts) do |name, value|
@@ -108,7 +108,8 @@ module Middleman
       mattr_accessor :blog
       mattr_accessor :auto
       mattr_accessor :base_url
-      mattr_accessor :image_base_url
+      mattr_accessor :app
+      mattr_accessor :current_resource
 
       def self.ogp_tags(opts = {}, &block) # rubocop:disable Metrics/MethodLength
         opts ||= {}
@@ -161,12 +162,22 @@ module Middleman
           else
             name = [prefix].concat(key).join(':')
             value = obj.to_s
-            if Middleman::OGP::Helper.image_base_url && name == 'og:image' && !%r{^https?://}.match(value)
-              value = URI.join(Middleman::OGP::Helper.image_base_url, value)
-            end
+            value = full_image_url(value) if name == 'og:image'
+
             block.call name, value
           end
         end
+      end
+
+      def self.full_image_url(value)
+        return value if %r{^https?://}.match(value)
+
+        value = Middleman::Util.asset_url(app, value, app.config.images_dir, current_resource: current_resource)
+        return app.extensions[:asset_host].rewrite_url(value, '', nil) if app.extensions[:asset_host]
+
+        return URI.join(base_url, value) if base_url
+
+        value
       end
     end
   end
