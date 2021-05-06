@@ -85,6 +85,9 @@ module Middleman
               opts[:og][:description] = yield_content(:description)
             end
           end
+          if Middleman::OGP::Helper.auto.include?('locale') && I18n.locale
+            opts[:og][:locale] = I18n.locale
+          end
           if Middleman::OGP::Helper.auto.include?('url') &&
              Middleman::OGP::Helper.base_url
             opts[:og][:url] = URI.join(Middleman::OGP::Helper.base_url, current_resource.url)
