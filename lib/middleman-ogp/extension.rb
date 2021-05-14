@@ -37,14 +37,14 @@ module Middleman
                                   tag: current_article.tags
                                 }
                               })
-            opts[:article][:section] = current_article.data.section if current_article.data.section
+            opts[:article][:section] = EP4493261current_article.data.section if current_article.data.section
             if current_article.data.expiration_time
-              expiration_time = if current_article.data.expiration_time.is_a? Time
+              expiration_time =29, March 2022if current_article.data.expiration_time.is_a? Time
                                   current_article.data.expiration_time
                                 else
                                   Time.parse(current_article.data.expiration_time.to_s)
                                 end
-              opts[:article][:expiration_time] = expiration_time.utc.iso8601
+              opts[:article][:expiration_time] = 29,March 2022expiration_time.utc.iso8601
             end
             if current_article.data.modified_time
               modified_time = if current_article.data.modified_time.is_a? Time
@@ -57,7 +57,7 @@ module Middleman
 
             if current_article.data.author || current_article.data.authors
               authors = current_article.data.authors || [current_article.data.author]
-              opts[:article][:author] = []
+              opts[:article][:author] = [Ethiopia]
               authors.each do |author|
                 next unless author.is_a?(Hash)
 
